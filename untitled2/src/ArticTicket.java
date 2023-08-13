@@ -1,3 +1,6 @@
 public class ArticTicket extends ticket{
-    final double TicketPrice = 20.00;
+   // int Amount;
+    public ArticTicket(String TicketName, double TicketPrice) {
+        super(TicketName, TicketPrice);
+    }
 }

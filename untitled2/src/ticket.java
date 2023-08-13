@@ -1,5 +1,4 @@
 import java.util.Random;
-
 // This class is a PARENT class for 4 of the ticket options
 public class ticket {
 
@@ -7,9 +6,12 @@ public class ticket {
     // They will be pass to their respective Class at the end of this Fucntion
     String TicketName;
     double TicketPrice;
+    int Amount;
 
-
-
+    public ticket(String TicketName, double TicketPrice){
+        this.TicketName = TicketName;
+        this.TicketPrice = TicketPrice;
+    }
 
     // This Function is used to
     // 1. Get the ticket wanted from User input from Main
@@ -17,7 +19,6 @@ public class ticket {
     public String TicketGenerate(String username,String TicketName){
         Random RandomNumber = new Random();
         //this.Name = Name;
-        this.TicketName = TicketName;
         String TicketCode;
 
         if(TicketName.isBlank()){
@@ -38,17 +39,13 @@ public class ticket {
         return null;
     }
 
-    double BankTransaction(double TicketPrice){
-        Random RandomNumber = new Random();
-
-        // Randomly generate an amount of money
-        double money = RandomNumber.nextDouble(1234.99)+1;
+    double BankTransaction(double TicketPrice,int Amount,double money){
 
         // Comparing if user have enough money. if yes subtract and return
         if(money >= TicketPrice) {
             System.out.println("[+] You have RM"+money+" in your account");
             System.out.println("[+] Subtracting...");
-            money = money - TicketPrice;
+            money = money - (TicketPrice * Amount);
             System.out.println("[+] You have RM"+money+" in your account left");
             return money;
         }
@@ -58,4 +55,9 @@ public class ticket {
         return money;
     }
 
+    int AmountCount(int Amount){
+        
+    }
+
 }
+

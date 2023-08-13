@@ -1,3 +1,5 @@
 public class RiverTicket extends ticket{
-    final double TicketPrice = 20.00;
+    public RiverTicket(String TicketName, double TicketPrice) {
+        super(TicketName, TicketPrice);
+    }
 }
