@@ -1,0 +1,17 @@
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	
++++ b/src/Main.java	(date 1691890547964)
+@@ -5,7 +5,7 @@
+ 
+ 
+     }
+-    void 
++    void
+     void RegisterUser(){
+         Scanner scanner = new Scanner(System.in);
+         String username;
