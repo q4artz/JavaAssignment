@@ -1,11 +1,11 @@
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-
-
-
+        ticket SavannaTicket = new ticket();
+        SavannaTicket.printing(SavannaTicket);
+        // Figure out how to Use function or Pass data from one class to another class
     }
-    void
+
     void RegisterUser(){
         Scanner scanner = new Scanner(System.in);
         String username;
