@@ -6,7 +6,7 @@ public class ticket {
     // They will be pass to their respective Class at the end of this Fucntion
     String TicketName;
     double TicketPrice;
-    int Amount;
+    static int Amount;
 
     public ticket(String TicketName, double TicketPrice){
         this.TicketName = TicketName;
@@ -56,7 +56,8 @@ public class ticket {
     }
 
     int AmountCount(int Amount){
-        
+        Amount = Amount+1;
+        return Amount;
     }
 
 }

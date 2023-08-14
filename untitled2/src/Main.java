@@ -6,8 +6,27 @@ public class Main {
         ticket RiverTicket = new ticket("River",20.00);
         ticket ArticTicket = new ticket("Artic",50.00);
         ticket AllAccessTicket = new ticket("All",80.00);
+
+        // 0 == quit 1 == Buy 2 == Search
+        int option = 0;
+        System.out.println("Welcome Customer, What would you like to do");
+        System.out.println("");
     }
 
+    void LoginUser(){
+        Scanner scanner = new Scanner(System.in);
+
+        String username;
+        String password;
+        String cardnumber;
+        int ccv;
+        int expdate;
+
+        System.out.println("[+] Please Enter Your Name");
+        username = scanner.nextLine();
+        System.out.println("[+] PLease Enter Your password");
+        password = scanner.nextLine();
+    }
     void RegisterUser(){
 
         Scanner scanner = new Scanner(System.in);
@@ -46,6 +65,10 @@ public class Main {
     void WriteToFile(user Customer){
         // File Function
     }
+    void ReadFromFile(String username,String password){
+
+    }
+
 
 }
 
