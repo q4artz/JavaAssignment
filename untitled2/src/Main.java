@@ -27,7 +27,7 @@ public class Main {
 
 
         // Authenticate users --done
-        if(1 == noaccountselection)
+        if(3 == noaccountselection)
             username = RegisterUser();
         else if(noaccountselection == 2)
             username = LoginUser();
@@ -38,12 +38,13 @@ public class Main {
 
         if(noaccountselection == 1 || noaccountselection == 2){
             while (option != 0) {
-                System.out.println("\nWelcome Customer, What would you like to do");
-                System.out.println("Please input \n \"1\" to Buy \n \"2\" to Search \n \"0\" to Quit \n");
+                System.out.println("\n[+] Welcome Customer, What would you like to do");
+                System.out.println("\nPlease input \n \"1\" to Buy \n \"2\" to Search \n \"0\" to Quit \n");
                 option = scanner.nextInt();
                 scanner.nextLine();
-                System.out.printf("You Entered %d\n", option);
+                System.out.printf("[+] You Entered %d\n", option);
 
+                // Buying
                 if (option == 1) {
                     System.out.println("[+] Transferring to Purchasing Option");
                     purchaseOption = PurchasingOption(username);
@@ -55,8 +56,17 @@ public class Main {
 
                     TicketCode = ticket.TicketGenerate(username,purchaseOption);
 
-                } else if (option == 2) {
+// for debugging before writing to file
+//System.out.printf("ticket option is %s \n ticket amount is %d\n ticket price is %f\n money is %f\n ticket code is %s",purchaseOption,purchaseAmount,TicketPrice,money,TicketCode);
+
+                    FinalWriteToFile(username,purchaseOption,purchaseAmount,money,TicketCode);
+
+                }
+
+                // Searching
+                else if (option == 2) {
                     System.out.println("[+] Transferring to Searching Option");
+
 
                 }
             }
@@ -70,7 +80,8 @@ public class Main {
         String optionDisplay="";
         int Amount=0;
 
-        System.out.println("[+] Which ticket would you like to buy? \"All Access Ticket (RM 80) Enter \"All\" \"\n \"Artic Ticket (RM50) Enter\"Artic\" \"\n \"Savanna Ticket (RM20)\" Enter \"Savanna\" \n \"River Ticket (RM20)\" Enter \"River\"\n");
+        System.out.println("[+] Welcome "+username+ " !");
+        System.out.println("[+] Which ticket would you like to buy?\n \"All Access Ticket (RM 80) Enter \t\"All\" \n \"Artic Ticket (RM50) Enter \t\"Artic\" \n \"Savanna Ticket (RM20)\" Enter \t\"Savanna\" \n \"River Ticket (RM20)\" Enter \t\"River\"\n");
         option = scanner.nextLine();
 
         switch (option.toUpperCase()) {
@@ -78,15 +89,12 @@ public class Main {
                 optionDisplay = "All Access Pass";
             }
             case "SAVANNA" -> {
-                System.out.println("How Many Savanna Ticket would you like to buy?");
                 optionDisplay = "Savanna Ticket";
             }
             case "ARTIC" -> {
-                System.out.println("How Many Artic Ticket would you like to buy?");
                 optionDisplay = "Artic Ticket";
             }
             case "RIVER" -> {
-                System.out.println("How Many River Ticket would you like to buy?");
                 optionDisplay = "River Ticket";
             }
             default -> System.out.println("[-] You Did not enter a valid option..");
@@ -99,28 +107,28 @@ public class Main {
         int Amount = 0;
         switch (option.toUpperCase()) {
             case "ALL" -> {
-                System.out.println("How Many All Access Ticket would you like to buy?");
+                System.out.println("[+] How Many All Access Ticket would you like to buy?");
                 Amount = scanner.nextInt();
                 break;
             }
             case "SAVANNA" -> {
-                System.out.println("How Many Savanna Ticket would you like to buy?");
+                System.out.println("[+] How Many Savanna Ticket would you like to buy?");
                 Amount = scanner.nextInt();
                 break;
             }
             case "ARTIC" -> {
-                System.out.println("How Many Artic Ticket would you like to buy?");
+                System.out.println("[+] How Many Artic Ticket would you like to buy?");
                 Amount = scanner.nextInt();
                 break;
             }
             case "RIVER" -> {
-                System.out.println("How Many River Ticket would you like to buy?");
+                System.out.println("[+] How Many River Ticket would you like to buy?");
                 Amount = scanner.nextInt();
                 break;
             }
             default -> System.out.println("[-] You Did not enter a valid Amount..");
         }
-        System.out.printf("[+]Buying %d amount of %s Tickets...",Amount,option);
+        System.out.printf("[+] Buying %d amount of %s Tickets...",Amount,option);
         return Amount;
     }
     static double GetTicketPrice(String TicketOption, int Amount){
@@ -140,6 +148,15 @@ public class Main {
         return ReturnTicketPrice;
     }
 
+    static void SearchingOption(String username){
+        Scanner scanner = new Scanner(System.in);
+        String searchusername;
+        if(username.equalsIgnoreCase("admin")){
+            System.out.println("[+] Welcome Admin. Who's profile would you like to search?");
+            searchusername = scanner.nextLine();
+        }
+
+    }
 
     static String LoginUser() throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -214,7 +231,7 @@ public class Main {
 
     }
     static void FinalWriteToFile(String username,String ticketOption,int Amount,double money,String TicketCode){
-        
+
     }
 
 

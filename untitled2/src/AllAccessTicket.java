@@ -15,7 +15,7 @@ public abstract class AllAccessTicket extends ticket{
                 Discount = (TicketPrice*8)/100;
             }
         TicketPrice = TicketPrice-Discount;
-        System.out.printf("[+] The total All Access Ticket Price is %f ",TicketPrice);
+        System.out.printf("[+] The total All Access Ticket Price is %.2f ",TicketPrice);
         return TicketPrice;
     }
 }
