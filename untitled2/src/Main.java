@@ -67,6 +67,7 @@ public class Main {
                 else if (option == 2) {
                     System.out.println("[+] Transferring to Searching Option");
 
+                    SearchingOption(username);
 
                 }
             }
@@ -155,7 +156,7 @@ public class Main {
             System.out.println("[+] Welcome Admin. Who's profile would you like to search?");
             searchusername = scanner.nextLine();
         }
-        
+
     }
 
     static String LoginUser() throws IOException {
