@@ -13,37 +13,135 @@ public class Main {
         ticket AllAccessTicket = new ticket("All", 80.00);
 
         // 0 == quit 1 == Buy 2 == Search
-        int option = 0;
-        System.out.println("\nWelcome Customer, What would you like to do");
-        System.out.println("Please input \n \"1\" to Buy \n \"2\" to Search \n \"0\" to Quit \n");
-        option = scanner.nextInt();
-        scanner.nextLine();
-        System.out.printf("You Entered %d\n", option);
+        int option = 1;
+        int noaccountselection = 1;
+        String username="";
+        String purchaseOption="";
+        int purchaseAmount;
+        double TicketPrice;
+        String TicketCode="";
 
-        do{
-            if (option == 1) {
-                System.out.println("[+] Transferring to Purchasing Option");
-                Purchasing();
-            } else if (option == 2) {
-                System.out.println("[+] Transferring to Searching Option");
-                LoginUser();
+        System.out.println("Please Login! (no account? press 1 to create one!)");
+        noaccountselection = scanner.nextInt();
+        scanner.nextLine();
+
+
+        // Authenticate users --done
+        if(1 == noaccountselection)
+            username = RegisterUser();
+        else if(noaccountselection == 2)
+            username = LoginUser();
+        else{
+            System.out.println("[-] Invalid option..Quitting");
+        }
+
+
+        if(noaccountselection == 1 || noaccountselection == 2){
+            while (option != 0) {
+                System.out.println("\nWelcome Customer, What would you like to do");
+                System.out.println("Please input \n \"1\" to Buy \n \"2\" to Search \n \"0\" to Quit \n");
+                option = scanner.nextInt();
+                scanner.nextLine();
+                System.out.printf("You Entered %d\n", option);
+
+                if (option == 1) {
+                    System.out.println("[+] Transferring to Purchasing Option");
+                    purchaseOption = PurchasingOption(username);
+                    purchaseAmount = PurchasingAmount(username, purchaseOption);
+
+                    TicketPrice = GetTicketPrice(purchaseOption,purchaseAmount);
+
+                    double money = ticket.BankTransaction(TicketPrice,purchaseAmount);
+
+                    TicketCode = ticket.TicketGenerate(username,purchaseOption);
+
+                } else if (option == 2) {
+                    System.out.println("[+] Transferring to Searching Option");
+
+                }
             }
-        }while (option != 0);
+        }
         System.out.println("[-] Exiting...");
         System.exit(0);
     }
-    static void Purchasing(){
+    static String PurchasingOption(String username){
         Scanner scanner = new Scanner(System.in);
         String option;
+        String optionDisplay="";
+        int Amount=0;
+
         System.out.println("[+] Which ticket would you like to buy? \"All Access Ticket (RM 80) Enter \"All\" \"\n \"Artic Ticket (RM50) Enter\"Artic\" \"\n \"Savanna Ticket (RM20)\" Enter \"Savanna\" \n \"River Ticket (RM20)\" Enter \"River\"\n");
         option = scanner.nextLine();
 
-        if(option.equalsIgnoreCase("All")){
-
+        switch (option.toUpperCase()) {
+            case "ALL" -> {
+                optionDisplay = "All Access Pass";
+            }
+            case "SAVANNA" -> {
+                System.out.println("How Many Savanna Ticket would you like to buy?");
+                optionDisplay = "Savanna Ticket";
+            }
+            case "ARTIC" -> {
+                System.out.println("How Many Artic Ticket would you like to buy?");
+                optionDisplay = "Artic Ticket";
+            }
+            case "RIVER" -> {
+                System.out.println("How Many River Ticket would you like to buy?");
+                optionDisplay = "River Ticket";
+            }
+            default -> System.out.println("[-] You Did not enter a valid option..");
         }
-
+        System.out.printf("[+] Buying %s ",optionDisplay);
+        return option;
     }
-    static void LoginUser() throws IOException {
+    static int PurchasingAmount(String username, String option) {
+        Scanner scanner = new Scanner(System.in);
+        int Amount = 0;
+        switch (option.toUpperCase()) {
+            case "ALL" -> {
+                System.out.println("How Many All Access Ticket would you like to buy?");
+                Amount = scanner.nextInt();
+                break;
+            }
+            case "SAVANNA" -> {
+                System.out.println("How Many Savanna Ticket would you like to buy?");
+                Amount = scanner.nextInt();
+                break;
+            }
+            case "ARTIC" -> {
+                System.out.println("How Many Artic Ticket would you like to buy?");
+                Amount = scanner.nextInt();
+                break;
+            }
+            case "RIVER" -> {
+                System.out.println("How Many River Ticket would you like to buy?");
+                Amount = scanner.nextInt();
+                break;
+            }
+            default -> System.out.println("[-] You Did not enter a valid Amount..");
+        }
+        System.out.printf("[+]Buying %d amount of %s Tickets...",Amount,option);
+        return Amount;
+    }
+    static double GetTicketPrice(String TicketOption, int Amount){
+        double ReturnTicketPrice=0.00;
+        if(TicketOption.equalsIgnoreCase("All")) {
+            ReturnTicketPrice = AllAccessTicket.TicketPrice(Amount);
+        }
+        else if(TicketOption.equalsIgnoreCase("Artic")) {
+            ReturnTicketPrice = ArticTicket.TicketPrice(Amount);
+        }
+        else if(TicketOption.equalsIgnoreCase("Savanna")) {
+            ReturnTicketPrice = SavannaTicket.TicketPrice(Amount);
+        }
+        else if(TicketOption.equalsIgnoreCase("River")) {
+            ReturnTicketPrice = RiverTicket.TicketPrice(Amount);
+        }
+        return ReturnTicketPrice;
+    }
+
+
+    static String LoginUser() throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         String username;
@@ -55,11 +153,13 @@ public class Main {
         password = scanner.nextLine();
 
         ReadFromFile(username,password);
+
+        return username;
     }
-    void RegisterUser() throws IOException {
+    static String RegisterUser() throws IOException {
 
         Scanner scanner = new Scanner(System.in);
-        Random RandomNumber = new Random();
+
 
         // Declear Variables
         String username;
@@ -67,6 +167,7 @@ public class Main {
         String cardnumber;
         int ccv;
         int expdate;
+        double money = 0.00;
 
         // User Input their info for Registration
         System.out.println("[+] Enter name");
@@ -82,8 +183,7 @@ public class Main {
         expdate = scanner.nextInt();
         scanner.nextLine();
 
-        // Randomly generate an amount of money
-        double money = RandomNumber.nextDouble(1234.99)+1;
+
 
         user Customer = new user(username,password,cardnumber,ccv,expdate,money);
 
@@ -91,8 +191,10 @@ public class Main {
 
         System.out.println("[+] Your account Has been created");
 
+        return username;
+
     }
-    void WriteToFile(user Customer) throws IOException{
+    static void WriteToFile(user Customer) throws IOException{
         // Create The file
         File file = new File("user.txt");
 
@@ -110,6 +212,9 @@ public class Main {
     }
     static void ReadFromFile(String username, String password)throws IOException{
 
+    }
+    static void FinalWriteToFile(String username,String ticketOption,int Amount,double money,String TicketCode){
+        
     }
 
 

@@ -6,7 +6,7 @@ public class ticket {
     // They will be pass to their respective Class at the end of this Fucntion
     String TicketName;
     double TicketPrice;
-    static int Amount;
+    int Amount;
 
     public ticket(String TicketName, double TicketPrice){
         this.TicketName = TicketName;
@@ -16,7 +16,7 @@ public class ticket {
     // This Function is used to
     // 1. Get the ticket wanted from User input from Main
     // 2. Generate a unique Ticket Code
-    public String TicketGenerate(String username,String TicketName){
+    public static String TicketGenerate(String username, String TicketName){
         Random RandomNumber = new Random();
         //this.Name = Name;
         String TicketCode;
@@ -39,7 +39,10 @@ public class ticket {
         return null;
     }
 
-    double BankTransaction(double TicketPrice,int Amount,double money){
+    static double BankTransaction(double TicketPrice, int Amount){
+        Random RandomNumber = new Random();
+        // Randomly generate an amount of money
+        double money = RandomNumber.nextDouble(1234.99)+1;
 
         // Comparing if user have enough money. if yes subtract and return
         if(money >= TicketPrice) {
