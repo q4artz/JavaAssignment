@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Random;
 public class Main {
@@ -13,7 +10,7 @@ public class Main {
         ticket AllAccessTicket = new ticket("All", 80.00);
 
         // 0 == quit 1 == Buy 2 == Search
-        int option = 1;
+        int option = 0;
         int noaccountselection = 1;
         String username="";
         String purchaseOption="";
@@ -27,7 +24,7 @@ public class Main {
 
 
         // Authenticate users --done
-        if(3 == noaccountselection)
+        if(1 == noaccountselection)
             username = RegisterUser();
         else if(noaccountselection == 2)
             username = LoginUser();
@@ -174,6 +171,8 @@ public class Main {
 
         return username;
     }
+
+    // This method is used to Register Users.
     static String RegisterUser() throws IOException {
 
         Scanner scanner = new Scanner(System.in);
@@ -202,9 +201,13 @@ public class Main {
         scanner.nextLine();
 
 
-
+        // Assign all the variables into this Custoner Object
         user Customer = new user(username,password,cardnumber,ccv,expdate,money);
 
+        // For Debugging
+        //System.out.printf("username in var == %s\n username in obj == %s\n",username,Customer.username);
+
+        // Pass it to Writing Method
         WriteToFile(Customer);
 
         System.out.println("[+] Your account Has been created");
@@ -212,7 +215,11 @@ public class Main {
         return username;
 
     }
-    static void WriteToFile(user Customer) throws IOException{
+    static void WriteToFile(user Customer) throws IOException {
+
+        // For debugging
+//        System.out.printf("username in obj writer file == %s\n",Customer.username);
+
         // Create The file
         File file = new File("user.txt");
 
@@ -222,13 +229,32 @@ public class Main {
         // Creates a print writer class
         PrintWriter pw = new PrintWriter(fw);
 
-        pw.println("line 1");
-        pw.println("line 2");
-        pw.println("line 3");
+        // Writing Object To file
+        pw.print(Customer.username);
+        pw.print(Customer.password);
+        pw.print(Customer.cardnumber);
+        pw.print(Customer.ccv);
+        pw.print(Customer.expdate);
 
+        // closing the file
         pw.close();
+
+        ReadFromFile(Customer.username,Customer.password);
+
     }
     static void ReadFromFile(String username, String password)throws IOException{
+        System.out.println("\nIn reader function\n");
+        try {
+            FileReader fr = new FileReader("user.txt");
+            int data = fr.read();
+            while(data != -1){
+                System.out.print((char)data);
+                data = fr.read();
+            }
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
 
     }
     static void FinalWriteToFile(String username,String ticketOption,int Amount,double money,String TicketCode){
